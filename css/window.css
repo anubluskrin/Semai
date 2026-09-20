@@ -48,3 +48,5 @@
 }
 .back-link:hover, .back-link:focus-visible { color: var(--mauve); outline: none; }
 
+.wrap { max-width: 1400px; margin: 0 auto; }
+
