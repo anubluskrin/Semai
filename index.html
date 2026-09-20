@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pelacak Kebiasaan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/window.css">
+<link rel="stylesheet" href="css/tracker.css">
+<link rel="stylesheet" href="css/settings.css">
+<link rel="stylesheet" href="css/overlays.css">
+</head>
+<body>
+
+
+  <div id="bgDefault" class="bg-layer"></div>
+  <img id="bgImage" class="bg-layer" alt="">
+  <video id="bgVideo" class="bg-layer" autoplay muted loop playsinline></video>
+  <div id="bgDimLayer"></div>
+
+  <div class="waybar">
+    <div class="ws" id="wsDays"></div>
+    <div class="center" id="waybarClock">hyprland</div>
+    <div class="right">
+      <span class="cmd-hint" id="cmdHint" title="Buka command palette" role="button" tabindex="0">⌘ ctrl+k</span>
+      <span id="wbHabitCount" title="Kebiasaan selesai hari ini">🌱 0/0</span>
+      <span id="wbTodayPct" title="Performa hari ini">🔋 0%</span>
+      <button class="gear-btn" id="gearBtn" type="button" aria-label="Buka pengaturan" title="Pengaturan">⚙</button>
+    </div>
+  </div>
+
+<div class="wrap">
+  <div class="window">
+    <div class="titlebar">
+      <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="path" id="titlebarPath">~/kebiasaan/tracker.sh</span>
+    </div>
+
+    <!-- TRACKER PANEL -->
+    <div id="panelTracker">
+      <header>
+        <h1>Pelacak Kebiasaan<span class="cursor"></span></h1>
+        <div class="month-nav">
+          <button id="prevMonth" type="button" aria-label="Bulan sebelumnya">‹</button>
+          <span class="month-label" id="monthLabel"></span>
+          <button id="nextMonth" type="button" aria-label="Bulan berikutnya">›</button>
+        </div>
+      </header>
+
+      <div class="add-row">
+        <span class="prompt">❯</span>
+        <input type="text" id="newHabitInput" placeholder="tambah --habit 'mis. minum air 8 gelas'" maxlength="60">
+        <select id="newHabitType" class="add-type-select" aria-label="tipe target">
+          <option value="daily">harian</option>
+          <option value="weekly">mingguan</option>
+        </select>
+        <input type="number" id="newHabitTarget" class="add-target-input" min="1" max="7" value="3" aria-label="target kali per minggu" style="display:none;">
+        <button id="addBtn" type="button">tambah</button>
+      </div>
+
+      <div class="table-scroll">
+        <table class="tracker" id="trackerTable" style="display:none;">
+          <colgroup id="tableColgroup"></colgroup>
+          <thead>
+            <tr class="week-row" id="weekRow">
+              <th class="habit-col-head" rowspan="2">kebiasaan</th>
+            </tr>
+            <tr class="day-row" id="dayRow"></tr>
+          </thead>
+          <tbody id="habitList"></tbody>
+        </table>
+      </div>
+
+      <div id="emptyState" class="empty-state">belum ada kebiasaan yang dilacak. tambahkan yang pertama di atas.</div>
+
+      <div class="chart-section" id="chartSection" style="display:none;">
+        <h2>performa harian</h2>
+        <div class="chart-card" id="chartCard"></div>
+      </div>
+
+      <footer>data tersimpan di perangkat ini saja</footer>
+    </div>
+
+    <!-- SETTINGS PANEL -->
+    <div id="panelSettings" style="display:none;">
+      <button type="button" id="backToTracker" class="back-link">‹ kembali ke pelacak</button>
+      <p class="conf-comment conf-intro"># semua file di bawah ini otomatis tersimpan ke localStorage browsermu — bukan file sungguhan</p>
+
+      <section class="conf-file">
+        <div class="conf-file-head"><span class="conf-dot"></span>~/.config/hypr/colors.conf</div>
+        <div class="conf-file-body">
+          <p class="conf-comment">preset colorscheme, atau pilih "kustom" buat racik sendiri pakai color wheel</p>
+          <div class="theme-grid" id="themeGrid"></div>
+
+          <div class="custom-editor" id="customEditor" style="display:none;">
+            <p class="conf-comment" style="margin-top:14px;">klik salah satu $variabel, lalu pilih warnanya di wheel</p>
+            <div class="custom-swatch-list" id="customSwatchList"></div>
+            <div class="wheel-editor">
+              <canvas id="colorWheelCanvas" width="150" height="150"></canvas>
+              <div class="wheel-controls">
+                <div class="conf-kv"><span class="k" id="wheelTargetLabel">$mauve</span><span class="eq">=</span><span class="v" id="wheelHexPreview">#cba6f7</span></div>
+                <label class="wheel-l-label">lightness
+                  <input type="range" id="wheelLightness" min="10" max="90" value="70">
+                </label>
+                <button type="button" id="customResetBtn" class="reset-btn" style="align-self:flex-start;">reset ke mocha</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="conf-file">
+        <div class="conf-file-head"><span class="conf-dot"></span>~/.config/hypr/hyprland.conf</div>
+        <div class="conf-file-body">
+          <p class="conf-comment">decoration { blur { } active_opacity }</p>
+          <div class="dim-row">
+            <label for="winOpacity">decoration:active_opacity = <span id="winOpacityVal">100%</span></label>
+            <input type="range" id="winOpacity" min="10" max="100" value="100">
+          </div>
+          <div class="dim-row">
+            <label for="winBlur">decoration:blur:size = <span id="winBlurVal">0px</span></label>
+            <input type="range" id="winBlur" min="0" max="30" value="0">
+          </div>
+          <button id="winReset" class="reset-btn" type="button">reset ke default</button>
+        </div>
+      </section>
+
+      <section class="conf-file">
+        <div class="conf-file-head"><span class="conf-dot"></span>~/.config/hypr/hyprpaper.conf</div>
+        <div class="conf-file-body">
+          <p class="conf-comment">preload &amp; wallpaper — gambar, gif, atau video</p>
+          <div class="bg-controls">
+            <label class="file-label">🖼 unggah gambar / gif
+              <input type="file" id="bgImageInput" accept="image/*">
+            </label>
+            <label class="file-label">🎬 unggah video
+              <input type="file" id="bgVideoInput" accept="video/*">
+            </label>
+          </div>
+          <div class="bg-url-row">
+            <input type="text" id="bgUrlInput" placeholder="atau tempel link gambar/gif/video...">
+            <select id="bgUrlType">
+              <option value="image">gambar/gif</option>
+              <option value="video">video</option>
+            </select>
+            <button id="bgUrlApply" type="button">terapkan</button>
+          </div>
+          <p class="conf-comment">link eksternal hanya tampil saat file ini dibuka langsung di browser (bukan versi yang dipublikasikan sebagai artifact) karena batasan keamanan. unggah file kalau mau latar selalu tampil di mana pun.</p>
+          <div class="dim-row">
+            <label for="bgDimRange">dim = <span id="bgDimVal">55%</span></label>
+            <input type="range" id="bgDimRange" min="0" max="95" value="55">
+          </div>
+          <button id="bgReset" class="reset-btn" type="button">unset wallpaper</button>
+        </div>
+      </section>
+
+      <section class="conf-file">
+        <div class="conf-file-head"><span class="conf-dot"></span>~/dotfiles/rice.json</div>
+        <div class="conf-file-body">
+          <p class="conf-comment">satu file berisi snapshot lengkap: colors.conf + hyprland.conf + hyprpaper.conf + kebiasaanmu. konsepnya sama kayak orang share dotfiles di r/unixporn — kirim file ini, orang lain tinggal impor buat pakai rice & (opsional) data kamu.</p>
+
+          <div class="preset-grid" id="presetGrid"></div>
+
+          <div class="rice-io-row">
+            <button id="riceExportBtn" class="reset-btn rice-btn" type="button">⭳ ekspor rice.json</button>
+            <label class="file-label">⭱ impor rice.json
+              <input type="file" id="riceImportInput" accept="application/json">
+            </label>
+          </div>
+          <p class="conf-comment">ekspor juga berfungsi sebagai backup — data cuma tersimpan di browser ini (localStorage), jadi kalau cache-nya kehapus, tanpa file ini semuanya ilang.</p>
+        </div>
+      </section>
+    </div>
+
+  </div>
+</div>
+
+<div class="cmd-overlay" id="cmdOverlay" style="display:none;">
+  <div class="cmd-box">
+    <div class="cmd-input-row">
+      <span class="cmd-prompt">❯</span>
+      <input type="text" id="cmdInput" class="cmd-input" placeholder="ketik perintah atau cari kebiasaan..." autocomplete="off">
+      <kbd class="cmd-esc">esc</kbd>
+    </div>
+    <div class="cmd-list" id="cmdList"></div>
+  </div>
+</div>
+
+<div class="toast-stack" id="toastStack" aria-live="polite"></div>
+
+<div class="fetch-overlay" id="fetchOverlay" style="display:none;">
+  <div class="fetch-box" id="fetchBox"></div>
+</div>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

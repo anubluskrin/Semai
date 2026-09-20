@@ -1,0 +1,105 @@
+/* ==============================================================
+   BASE  -- theme tokens, reset, background layers, waybar
+   ============================================================== */
+/* ============================================================
+   1. THEME TOKENS
+   ============================================================ */
+:root {
+  --crust: #11111b;
+  --mantle: #181825;
+  --base: #1e1e2e;
+  --surface0: #313244;
+  --surface1: #45475a;
+  --surface2: #585b70;
+  --overlay0: #6c7086;
+  --overlay1: #7f849c;
+  --text: #cdd6f4;
+  --subtext0: #a6adc8;
+  --mauve: #cba6f7;
+  --blue: #89b4fa;
+  --sapphire: #74c7ec;
+  --teal: #94e2d5;
+  --green: #a6e3a1;
+  --yellow: #f9e2af;
+  --peach: #fab387;
+  --red: #f38ba8;
+  --pink: #f5c2e7;
+
+  /* window appearance -- only two knobs now: fill opacity + blur */
+  --window-bg: var(--base);
+  --window-blur: 0px;
+  /* chart card follows window opacity too, but never fades below a legible floor */
+  --chart-bg: var(--mantle);
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  background: var(--crust);
+  color: var(--text);
+  font-family: 'JetBrains Mono', monospace;
+  min-height: 100vh;
+  padding: 64px 16px 40px;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* ============================================================
+   2. BACKGROUND LAYERS
+   ============================================================ */
+.bg-layer { position: fixed; z-index: -3; pointer-events: none; }
+#bgDefault {
+  top: -15%; left: -15%; right: -15%; bottom: -15%; width: 130%; height: 130%;
+  background:
+    radial-gradient(circle at 15% 20%, var(--mauve) 0%, transparent 38%),
+    radial-gradient(circle at 85% 15%, var(--blue) 0%, transparent 35%),
+    radial-gradient(circle at 30% 85%, var(--teal) 0%, transparent 38%),
+    radial-gradient(circle at 90% 85%, var(--pink) 0%, transparent 32%),
+    var(--crust);
+  filter: blur(90px) saturate(130%);
+  opacity: 0.28;
+  transition: background 0.3s ease;
+}
+#bgImage, #bgVideo { inset: 0; width: 100%; height: 100%; object-fit: cover; display: none; }
+#bgDimLayer {
+  position: fixed; inset: 0; z-index: -1; background: rgba(0,0,0,0); pointer-events: none;
+  transition: background 0.2s ease;
+}
+
+/* ============================================================
+   3. WAYBAR
+   ============================================================ */
+.waybar {
+  position: fixed; top: 10px; left: 10px; right: 10px; height: 34px;
+  background: rgba(24, 24, 37, 0.75);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--surface0); border-radius: 8px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 12px; font-size: 0.72rem; color: var(--subtext0); z-index: 10;
+}
+.waybar .ws { display: flex; gap: 4px; }
+.waybar .ws span {
+  width: 20px; height: 20px; display: flex; align-items: center; justify-content: center;
+  border-radius: 4px; color: var(--overlay1); font-size: 0.64rem; font-weight: 600;
+  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+.waybar .ws span.partial { background: var(--surface1); color: var(--text); }
+.waybar .ws span.full { background: var(--green); color: var(--crust); }
+.waybar .ws span.today { box-shadow: 0 0 0 1px var(--blue); }
+.waybar .center { font-weight: 500; color: var(--text); letter-spacing: 0.02em; }
+.waybar .right { display: flex; gap: 12px; align-items: center; }
+.gear-btn {
+  background: none; border: 1px solid var(--surface1); border-radius: 4px; color: var(--overlay1);
+  cursor: pointer; font-size: 0.8rem; line-height: 1; padding: 3px 7px;
+  font-family: 'JetBrains Mono', monospace; transition: border-color 0.15s ease, color 0.15s ease;
+}
+.gear-btn:hover, .gear-btn:focus-visible, .gear-btn.active { border-color: var(--mauve); color: var(--text); outline: none; }
+.gear-btn.active { color: var(--mauve); }
+.cmd-hint {
+  cursor: pointer; padding: 2px 6px; border: 1px solid var(--surface1); border-radius: 4px;
+  font-size: 0.66rem; transition: border-color 0.15s ease, color 0.15s ease;
+}
+.cmd-hint:hover, .cmd-hint:focus-visible { border-color: var(--mauve); color: var(--text); outline: none; }
+

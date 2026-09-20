@@ -1,0 +1,50 @@
+/* ==============================================================
+   WINDOW  -- the main glass window, titlebar, settings back-link
+   ============================================================== */
+/* ============================================================
+   4. WINDOW
+   Border is drawn by ::before as an independent masked ring, so
+   it never fades with --window-bg's alpha. Radius/glow are fixed,
+   not user-configurable.
+   ============================================================ */
+.window {
+  position: relative;
+  border-radius: 14px;
+  background: var(--window-bg);
+  backdrop-filter: blur(var(--window-blur)) saturate(150%);
+  -webkit-backdrop-filter: blur(var(--window-blur)) saturate(150%);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.45), 0 24px 70px rgba(0, 0, 0, 0.55);
+  padding: 28px 26px 32px;
+  transition: backdrop-filter 0.15s ease;
+}
+.window::before {
+  content: '';
+  position: absolute;
+  inset: -1.5px;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(135deg, var(--mauve), var(--blue), var(--teal));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.titlebar { display: flex; align-items: center; gap: 8px; margin-bottom: 18px; }
+.dot { width: 11px; height: 11px; border-radius: 50%; }
+.dot.r { background: var(--red); }
+.dot.y { background: var(--yellow); }
+.dot.g { background: var(--green); }
+.titlebar .path { margin-left: 10px; font-size: 0.72rem; color: var(--overlay1); }
+
+/* ============================================================
+   5. SETTINGS BACK LINK (replaces the old tab switcher --
+   settings is now entered via the gear icon in the waybar)
+   ============================================================ */
+.back-link {
+  background: none; border: none; color: var(--overlay1); font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem; cursor: pointer; padding: 4px 0; margin-bottom: 18px;
+  display: inline-flex; align-items: center; gap: 4px; transition: color 0.15s ease;
+}
+.back-link:hover, .back-link:focus-visible { color: var(--mauve); outline: none; }
+
