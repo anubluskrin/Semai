@@ -95,7 +95,10 @@ table.tracker th, table.tracker td { padding: 0; }
 .habit-name-cell { font-size: 0.85rem; padding: 12px 8px 12px 0 !important; }
 .habit-name-wrap { display: flex; align-items: center; gap: 8px; }
 .habit-name-wrap .name-text::before { content: '· '; color: var(--teal); }
-.habit-name-wrap .name-text { flex: 1; word-break: break-word; color: var(--text); }
+.habit-name-wrap .name-text {
+  flex: 1; word-break: break-word; color: var(--text);
+  padding-left: 1.2em; text-indent: -1.2em;
+}
 .habit-tag {
   font-size: 0.6rem; color: var(--overlay1); background: var(--surface0); border: 1px solid var(--surface1);
   border-radius: 4px; padding: 1px 5px; white-space: nowrap; flex-shrink: 0;
