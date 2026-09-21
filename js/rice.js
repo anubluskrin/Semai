@@ -10,11 +10,11 @@ import { renderAll } from './render.js';
 
 export const Rice = (function () {
   const PRESETS = [
-    { name: 'minimal glass', desc: 'mocha · blur tinggi', theme: 'mocha', opacity: 70, blur: 18 },
-    { name: 'neon terminal', desc: 'cyberpunk · solid', theme: 'cyberpunk', opacity: 100, blur: 0 },
-    { name: 'frost', desc: 'nord · lembut', theme: 'nord', opacity: 55, blur: 10 },
-    { name: 'earthy', desc: 'gruvbox · solid', theme: 'gruvbox', opacity: 95, blur: 0 }
-  ];
+  { name: 'mono glass', desc: 'monokrom · blur tinggi', theme: 'mono', opacity: 70, blur: 18 },
+  { name: 'phosphor', desc: 'terminal hijau · solid', theme: 'termgreen', opacity: 100, blur: 0 },
+  { name: 'crt amber', desc: 'terminal amber · solid', theme: 'amber', opacity: 100, blur: 0 },
+  { name: 'frost', desc: 'nord · lembut', theme: 'nord', opacity: 55, blur: 10 }
+];
 
   function buildGrid() {
     const grid = document.getElementById('presetGrid');
@@ -41,7 +41,7 @@ export const Rice = (function () {
       kind: 'habit-tracker-rice',
       version: 1,
       exportedAt: REAL_TODAY,
-      theme: Storage.get(Storage.keys.theme, 'mocha'),
+      theme: Storage.get(Storage.keys.theme, 'mono'),
       customThemeVars: Storage.get(Storage.keys.customTheme, null),
       winfx: WinFx.get(),
       background: Background.exportData(),
