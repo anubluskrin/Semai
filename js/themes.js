@@ -55,12 +55,12 @@ export const THEMES = {
 
 export const ThemeManager = (function () {
   function customVars() {
-    return Storage.get(Storage.keys.customTheme, null) || { ...THEMES.mocha.vars };
+    return Storage.get(Storage.keys.customTheme, null) || { ...THEMES.mono.vars };
   }
 
   function applyTheme(key) {
     const root = document.documentElement;
-    const vars = key === 'custom' ? customVars() : (THEMES[key] || THEMES.mocha).vars;
+    const vars = key === 'custom' ? customVars() : (THEMES[key] || THEMES.mono).vars;
     Object.entries(vars).forEach(([k, v]) => root.style.setProperty(k, v));
     WinFx.apply();
     renderChart();
@@ -70,7 +70,7 @@ export const ThemeManager = (function () {
 
   function buildGrid() {
     const grid = document.getElementById('themeGrid');
-    const current = Storage.get(Storage.keys.theme, 'mocha');
+    const current = Storage.get(Storage.keys.theme, 'mono');
     grid.innerHTML = '';
     Object.entries(THEMES).forEach(([key, theme]) => {
       const btn = document.createElement('button');
@@ -104,7 +104,7 @@ export const ThemeManager = (function () {
 
   function load() {
     buildGrid();
-    applyTheme(Storage.get(Storage.keys.theme, 'mocha'));
+    applyTheme(Storage.get(Storage.keys.theme, 'mono'));
   }
 
   return { load, set, buildGrid };
@@ -164,7 +164,7 @@ export const CustomTheme = (function () {
     return { r: hue2rgb(p, q, h + 1 / 3) * 255, g: hue2rgb(p, q, h) * 255, b: hue2rgb(p, q, h - 1 / 3) * 255 };
   }
 
-  function defaultVars() { return { ...THEMES.mocha.vars }; }
+  function defaultVars() { return { ...THEMES.mono.vars }; }
   function getVars() { return Storage.get(Storage.keys.customTheme, null) || defaultVars(); }
   function saveVars(vars) { Storage.set(Storage.keys.customTheme, vars); }
 

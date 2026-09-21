@@ -21,8 +21,8 @@ export const Fastfetch = (function () {
     const total = state.habits.length;
     const doneToday = total ? state.habits.filter(h => h.completions[REAL_TODAY]).length : 0;
     const weeklyCount = state.habits.filter(h => h.type === 'weekly').length;
-    const themeKey = Storage.get(Storage.keys.theme, 'mocha');
-    const themeName = themeKey === 'custom' ? '🎨 kustom (color wheel)' : (THEMES[themeKey] || THEMES.mocha).name;
+    const themeKey = Storage.get(Storage.keys.theme, 'mono');
+    const themeName = themeKey === 'custom' ? ' kustom (color wheel)' : (THEMES[themeKey] || THEMES.mono).name;
     const earliest = state.habits.reduce((min, h) => (h.createdAt && (!min || h.createdAt < min)) ? h.createdAt : min, null);
     const sejak = earliest ? `${daysSince(earliest)} hari lalu` : '-';
 
