@@ -11,12 +11,36 @@ import { WinFx } from './winfx.js';
 import { renderChart } from './chart.js';
 
 export const THEMES = {
-  mocha: {
-    name: 'catppuccin mocha', vars: {
-      '--crust': '#11111b', '--mantle': '#181825', '--base': '#1e1e2e', '--surface0': '#313244', '--surface1': '#45475a',
-      '--surface2': '#585b70', '--overlay0': '#6c7086', '--overlay1': '#7f849c', '--text': '#cdd6f4', '--subtext0': '#a6adc8',
-      '--mauve': '#cba6f7', '--blue': '#89b4fa', '--sapphire': '#74c7ec', '--teal': '#94e2d5', '--green': '#a6e3a1',
-      '--yellow': '#f9e2af', '--peach': '#fab387', '--red': '#f38ba8', '--pink': '#f5c2e7'
+  mono: {
+    name: 'monokrom', vars: {
+      '--crust': '#0a0a0a', '--mantle': '#111111', '--base': '#161616', '--surface0': '#1e1e1e', '--surface1': '#2a2a2a',
+      '--surface2': '#383838', '--overlay0': '#5a5a5a', '--overlay1': '#888888', '--text': '#d4d4d8', '--subtext0': '#a1a1aa',
+      '--mauve': '#fafafa', '--blue': '#fafafa', '--sapphire': '#fafafa', '--teal': '#fafafa', '--green': '#fafafa',
+      '--yellow': '#fafafa', '--peach': '#fafafa', '--red': '#fafafa', '--pink': '#fafafa'
+    }
+  },
+  termgreen: {
+    name: 'terminal hijau', vars: {
+      '--crust': '#000000', '--mantle': '#050a05', '--base': '#0a120a', '--surface0': '#0f1c0f', '--surface1': '#1a301a',
+      '--surface2': '#234023', '--overlay0': '#2d5a2d', '--overlay1': '#3d7a3d', '--text': '#4ade80', '--subtext0': '#2fae5f',
+      '--mauve': '#39ff14', '--blue': '#39ff14', '--sapphire': '#39ff14', '--teal': '#39ff14', '--green': '#39ff14',
+      '--yellow': '#39ff14', '--peach': '#39ff14', '--red': '#39ff14', '--pink': '#39ff14'
+    }
+  },
+  amber: {
+    name: 'terminal amber', vars: {
+      '--crust': '#000000', '--mantle': '#0a0600', '--base': '#120d00', '--surface0': '#1a1200', '--surface1': '#2e2000',
+      '--surface2': '#402d00', '--overlay0': '#5a4000', '--overlay1': '#7a5800', '--text': '#e8a33d', '--subtext0': '#c4841f',
+      '--mauve': '#ffb000', '--blue': '#ffb000', '--sapphire': '#ffb000', '--teal': '#ffb000', '--green': '#ffb000',
+      '--yellow': '#ffb000', '--peach': '#ffb000', '--red': '#ffb000', '--pink': '#ffb000'
+    }
+  },
+  solarized: {
+    name: 'solarized dark', vars: {
+      '--crust': '#001e26', '--mantle': '#002b36', '--base': '#073642', '--surface0': '#0a4552', '--surface1': '#586e75',
+      '--surface2': '#657b83', '--overlay0': '#657b83', '--overlay1': '#839496', '--text': '#93a1a1', '--subtext0': '#839496',
+      '--mauve': '#6c71c4', '--blue': '#268bd2', '--sapphire': '#2aa198', '--teal': '#2aa198', '--green': '#859900',
+      '--yellow': '#b58900', '--peach': '#cb4b16', '--red': '#dc322f', '--pink': '#d33682'
     }
   },
   nord: {
@@ -25,22 +49,6 @@ export const THEMES = {
       '--surface2': '#5e6779', '--overlay0': '#7b88a1', '--overlay1': '#8fbcbb', '--text': '#eceff4', '--subtext0': '#d8dee9',
       '--mauve': '#b48ead', '--blue': '#81a1c1', '--sapphire': '#88c0d0', '--teal': '#8fbcbb', '--green': '#a3be8c',
       '--yellow': '#ebcb8b', '--peach': '#d08770', '--red': '#bf616a', '--pink': '#b48ead'
-    }
-  },
-  gruvbox: {
-    name: 'gruvbox dark', vars: {
-      '--crust': '#1d2021', '--mantle': '#282828', '--base': '#32302f', '--surface0': '#3c3836', '--surface1': '#504945',
-      '--surface2': '#665c54', '--overlay0': '#7c6f64', '--overlay1': '#a89984', '--text': '#ebdbb2', '--subtext0': '#d5c4a1',
-      '--mauve': '#d3869b', '--blue': '#83a598', '--sapphire': '#8ec07c', '--teal': '#8ec07c', '--green': '#b8bb26',
-      '--yellow': '#fabd2f', '--peach': '#fe8019', '--red': '#fb4934', '--pink': '#d3869b'
-    }
-  },
-  cyberpunk: {
-    name: 'cyberpunk 2077', vars: {
-      '--crust': '#050505', '--mantle': '#0d0d0d', '--base': '#131313', '--surface0': '#1c1c1c', '--surface1': '#282828',
-      '--surface2': '#3a3a3a', '--overlay0': '#5a5a5a', '--overlay1': '#8a8a8a', '--text': '#f5f5f0', '--subtext0': '#cfcfc4',
-      '--mauve': '#d6fc51', '--blue': '#00f0ff', '--sapphire': '#00c2d1', '--teal': '#00f0ff', '--green': '#39ff14',
-      '--yellow': '#fcee0c', '--peach': '#ff6b35', '--red': '#ff003c', '--pink': '#fc28a8'
     }
   }
 };
